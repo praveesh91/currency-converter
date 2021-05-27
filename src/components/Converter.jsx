@@ -9,9 +9,9 @@ import Result from './Result';
 import SelectCurrency from './SelectCurrency';
 
 const Converter = (props) => {
-  const [result, setResult] = useState(0);
-  const [intermediateCrossresult, setIntermediateCrossResult] = useState(0);
-  const [finalCrossresult, setfinalCrossResult] = useState(0);
+  const [result, setResult] = useState();
+  // const [intermediateCrossresult, setIntermediateCrossResult] = useState(0);
+  // const [finalCrossresult, setfinalCrossResult] = useState(0);
   const [errorFlag, setErrorFlag] = useState(false);
   const rates = {
     AUDUSD: 0.8371,
@@ -26,16 +26,19 @@ const Converter = (props) => {
     EURNOK: 8.6651,
   };
 
-  useEffect(() => {
-    setResult(finalCrossresult);
-    return () => {};
-  }, [intermediateCrossresult]);
+  // useEffect(() => {
+  //   setResult(finalCrossresult);
+  //   return () => {};
+  // }, [intermediateCrossresult]);
 
   useEffect(() => {
-    return () => {
+    console.log(errorFlag);
+    errorFlag &&
       message.info(
         `Unable to find the rate for ${props.baseCurrency}/${props.termsCurrency}`
       );
+    return () => {
+      setErrorFlag(false);
     };
   }, [errorFlag]);
 
@@ -44,7 +47,6 @@ const Converter = (props) => {
   };
 
   const defineFunctionCall = (base, terms, amount) => {
-    // console.log("defineFunctionCall", base, terms, amount);
     if (base === terms) {
       setResult(amount);
     } else if (rates.hasOwnProperty(`${base}${terms}`))
@@ -55,7 +57,6 @@ const Converter = (props) => {
   };
 
   const directValues = (base, terms, amount) => {
-    console.log("directValues");
     for (let [key, value] of Object.entries(rates)) {
       if (key === `${base}${terms}`) {
         let res = key.includes("JPY")
@@ -67,7 +68,6 @@ const Converter = (props) => {
   };
 
   const reversedValues = (base, terms, amount) => {
-    console.log("reversedValues");
     for (let [key, value] of Object.entries(rates)) {
       if (key === `${terms}${base}`) {
         let res = key.includes("JPY")
@@ -104,26 +104,32 @@ const Converter = (props) => {
       }
     }
   };
-  const crossInitialStep = (base, intermediateTerms, terms, amount) => {
+  var crossInitialStep = (base, intermediateTerms, terms, amount) => {
     for (let [key, value] of Object.entries(rates)) {
       if (
         key === `${base}${intermediateTerms}` ||
         key === `${intermediateTerms}${base}`
       ) {
         // setIntermediateCrossResult(parseInt(amount) * value);
-        crossFinalStep(intermediateTerms, terms, parseInt(amount) * value);
-      } else setErrorFlag(!errorFlag);
+        return crossFinalStep(
+          intermediateTerms,
+          terms,
+          parseInt(amount) * value
+        );
+      }
     }
+    setErrorFlag(!errorFlag);
   };
 
-  const crossFinalStep = (newBase, terms, intermediateCrossresult) => {
+  var crossFinalStep = (newBase, terms, intermediateCrossresult) => {
     for (let [key, value] of Object.entries(rates)) {
       if (key === `${newBase}${terms}` || key === `${terms}${newBase}`) {
         // setfinalCrossResult(intermediateCrossresult * value);
         // console.log({ finalCrossresult });
-        setResult(intermediateCrossresult * value);
-      } else setErrorFlag(!errorFlag);
+        return setResult(intermediateCrossresult * value);
+      }
     }
+    setErrorFlag(!errorFlag);
   };
 
   return (
@@ -132,18 +138,18 @@ const Converter = (props) => {
       bordered={false}
       style={{ width: 900, margin: "auto", display: "block" }}>
       <Form layout="inline" onFinish={handleSubmit}>
-        <FormItem>
+        <FormItem name="Amount">
           <Inputbox
             handleInput={(e) => props.changeInputCurrencyVal(e.target.value)}
             amountVal={props.amount}
           />
         </FormItem>
-        <FormItem label="From" name="base">
+        <FormItem label="From" name="Base">
           <SelectCurrency
             handleSelectCurrency={(e) => props.changeBaseCurrency(e)}
           />
         </FormItem>
-        <FormItem label="To" name="terms">
+        <FormItem label="To" name="Terms">
           <SelectCurrency
             handleSelectCurrency={(e) => props.changeTermsCurrency(e)}
           />
@@ -162,7 +168,6 @@ const Converter = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log({ state });
   return {
     amount: state.amount,
     baseCurrency: state.base,

@@ -11,7 +11,6 @@ import reportWebVitals from './reportWebVitals';
 import conversionReducer from './store/reducer/converter';
 
 const store = createStore(conversionReducer);
-console.log({ store });
 
 ReactDOM.render(
   <Provider store={store}>

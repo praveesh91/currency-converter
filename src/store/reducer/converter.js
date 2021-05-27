@@ -3,15 +3,12 @@ import * as actionTypes from '../actions/actionTypes';
 const initialValues = {
   base: "",
   terms: "",
-  amount: 0,
+  amount: "",
   result: "",
-  intermediateCrossresult: "",
-  finalCrossresult: "",
   errorFlag: "",
 };
 
 const reducer = (state = initialValues, action) => {
-  console.log({ action });
   switch (action.type) {
     case actionTypes.CHANGE_BASE_CURRENCY: {
       return {
