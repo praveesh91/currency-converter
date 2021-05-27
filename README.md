@@ -1,3 +1,7 @@
+# Demo
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/9131336/119880474-eb87de80-bf49-11eb-849d-4e22aaa2918e.gif)
+
 # Alogirithm
 
 function accepts currency pair and currency value
