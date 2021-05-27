@@ -2,6 +2,10 @@
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/9131336/119880474-eb87de80-bf49-11eb-849d-4e22aaa2918e.gif)
 
+# Live Link
+
+[Currency converter App](https://main.d3vm5087pn2ig1.amplifyapp.com/)
+
 # Alogirithm
 
 function accepts currency pair and currency value
@@ -12,7 +16,9 @@ function accepts currency pair and currency value
    2.1 swap the currency pair
    2.2 multiply currency value with 1/currency rate
 3. if currency pair not in the given data
-   derive the pair
+   3.1 sorted based on the intermediate conversion currency
+   3.2 converted initially with the intermediate currency
+   3.3 again with that result, converted to the final currency
 
 # Getting Started with Create React App
 

@@ -77,29 +77,6 @@ const Converter = (props) => {
       }
     }
   };
-
-  const crossInitialStep = (base, intermediateTerms, terms, amount) => {
-    for (let [key, value] of Object.entries(rates)) {
-      if (
-        key === `${base}${intermediateTerms}` ||
-        key === `${intermediateTerms}${base}`
-      ) {
-        // setIntermediateCrossResult(parseInt(amount) * value);
-        crossFinalStep(intermediateTerms, terms, parseInt(amount) * value);
-      } else setErrorFlag(!errorFlag);
-    }
-  };
-
-  const crossFinalStep = (newBase, terms, intermediateCrossresult) => {
-    for (let [key, value] of Object.entries(rates)) {
-      if (key === `${newBase}${terms}` || key === `${terms}${newBase}`) {
-        // setfinalCrossResult(intermediateCrossresult * value);
-        // console.log({ finalCrossresult });
-        setResult(intermediateCrossresult * value);
-      } else setErrorFlag(!errorFlag);
-    }
-  };
-
   const crossedValues = (base, terms, amount) => {
     if (base === "AUD" || "CAD" || "CNY" || "EUR" || "GBP" || "JPY" || "NSD") {
       crossInitialStep(base, "USD", terms, amount);
@@ -127,6 +104,28 @@ const Converter = (props) => {
       }
     }
   };
+  const crossInitialStep = (base, intermediateTerms, terms, amount) => {
+    for (let [key, value] of Object.entries(rates)) {
+      if (
+        key === `${base}${intermediateTerms}` ||
+        key === `${intermediateTerms}${base}`
+      ) {
+        // setIntermediateCrossResult(parseInt(amount) * value);
+        crossFinalStep(intermediateTerms, terms, parseInt(amount) * value);
+      } else setErrorFlag(!errorFlag);
+    }
+  };
+
+  const crossFinalStep = (newBase, terms, intermediateCrossresult) => {
+    for (let [key, value] of Object.entries(rates)) {
+      if (key === `${newBase}${terms}` || key === `${terms}${newBase}`) {
+        // setfinalCrossResult(intermediateCrossresult * value);
+        // console.log({ finalCrossresult });
+        setResult(intermediateCrossresult * value);
+      } else setErrorFlag(!errorFlag);
+    }
+  };
+
   return (
     <Card
       title="Currency Converter"
