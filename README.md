@@ -1,3 +1,13 @@
+# Alogirithm
+
+function accepts currency pair and currency value
+if currency pair directly present in the map
+multiply currency rate with currency value
+if currency pair is inverted form
+multiply currency value with 1/currency rate
+if currency pair not in the given data
+derive the pair
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
