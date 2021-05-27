@@ -1,14 +1,15 @@
 import { Button, Card, Form, message } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 
-import * as conversionActionCreators from '../store/actions/conversion';
 import Inputbox from './Inputbox';
 import Result from './Result';
 import SelectCurrency from './SelectCurrency';
 
-const Converter = (props) => {
+const Converter = () => {
+  const [terms, setTerms] = useState("AUD");
+  const [base, setBase] = useState("AUD");
+  const [amount, setAmount] = useState(0);
   const [result, setResult] = useState(0);
   const [intermediateCrossresult, setIntermediateCrossResult] = useState(0);
   const [finalCrossresult, setfinalCrossResult] = useState(0);
@@ -33,14 +34,12 @@ const Converter = (props) => {
 
   useEffect(() => {
     return () => {
-      message.info(
-        `Unable to find the rate for ${props.baseCurrency}/${props.termsCurrency}`
-      );
+      message.info(`Unable to find the rate for ${base}/${terms}`);
     };
   }, [errorFlag]);
 
   const handleSubmit = () => {
-    defineFunctionCall(props.baseCurrency, props.termsCurrency, props.amount);
+    defineFunctionCall(base, terms, amount);
   };
 
   const defineFunctionCall = (base, terms, amount) => {
@@ -84,7 +83,7 @@ const Converter = (props) => {
         key === `${base}${intermediateTerms}` ||
         key === `${intermediateTerms}${base}`
       ) {
-        // setIntermediateCrossResult(parseInt(amount) * value);
+        setIntermediateCrossResult(parseInt(amount) * value);
         crossFinalStep(intermediateTerms, terms, parseInt(amount) * value);
       } else setErrorFlag(!errorFlag);
     }
@@ -93,8 +92,8 @@ const Converter = (props) => {
   const crossFinalStep = (newBase, terms, intermediateCrossresult) => {
     for (let [key, value] of Object.entries(rates)) {
       if (key === `${newBase}${terms}` || key === `${terms}${newBase}`) {
-        // setfinalCrossResult(intermediateCrossresult * value);
-        // console.log({ finalCrossresult });
+        setfinalCrossResult(intermediateCrossresult * value);
+        console.log({ finalCrossresult });
         setResult(intermediateCrossresult * value);
       } else setErrorFlag(!errorFlag);
     }
@@ -135,19 +134,15 @@ const Converter = (props) => {
       <Form layout="inline" onFinish={handleSubmit}>
         <FormItem>
           <Inputbox
-            handleInput={(e) => props.changeInputCurrencyVal(e.target.value)}
-            amountVal={props.amount}
+            handleInput={(e) => setAmount(e.target.value)}
+            amountVal={amount}
           />
         </FormItem>
         <FormItem label="From" name="base">
-          <SelectCurrency
-            handleSelectCurrency={(e) => props.changeBaseCurrency(e)}
-          />
+          <SelectCurrency handleSelectCurrency={(e) => setBase(e)} />
         </FormItem>
         <FormItem label="To" name="terms">
-          <SelectCurrency
-            handleSelectCurrency={(e) => props.changeTermsCurrency(e)}
-          />
+          <SelectCurrency handleSelectCurrency={(e) => setTerms(e)} />
         </FormItem>
         <FormItem>
           <Button type="primary" htmlType="submit">
@@ -162,22 +157,4 @@ const Converter = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log({ state });
-  return {
-    amount: state.amount,
-    baseCurrency: state.base,
-    termsCurrency: state.terms,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    changeInputCurrencyVal: (e) =>
-      dispatch(conversionActionCreators.inputCurrencyVal(e)),
-    changeBaseCurrency: (e) => dispatch(conversionActionCreators.changeBase(e)),
-    changeTermsCurrency: (e) =>
-      dispatch(conversionActionCreators.changeTerms(e)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Converter);
+export default Converter;
