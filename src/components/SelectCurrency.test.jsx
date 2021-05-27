@@ -4,6 +4,8 @@ import SelectCurrency from './SelectCurrency';
 
 describe("<SelectCurrency />", () => {
   test("render select boxes", () => {
-    render(<SelectCurrency />);
+    const { queryAllByTestId } = render(<SelectCurrency />);
+    const selectItem = queryAllByTestId("select");
+    expect(selectItem).toBeTruthy();
   });
 });

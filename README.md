@@ -1,12 +1,14 @@
 # Alogirithm
 
 function accepts currency pair and currency value
-if currency pair directly present in the map
-multiply currency rate with currency value
-if currency pair is inverted form
-multiply currency value with 1/currency rate
-if currency pair not in the given data
-derive the pair
+
+1. if currency pair directly present in the map
+   1.1 multiply currency rate with currency value
+2. if currency pair is inverted form
+   2.1 swap the currency pair
+   2.2 multiply currency value with 1/currency rate
+3. if currency pair not in the given data
+   derive the pair
 
 # Getting Started with Create React App
 
