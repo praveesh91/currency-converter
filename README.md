@@ -10,15 +10,15 @@
 
 function accepts currency pair and currency value
 
-1. if currency pair directly present in the map
+1. if currency pair directly present in the map<br/>
    1.1 multiply currency rate with currency value
-2. if currency pair is inverted form
-   2.1 swap the currency pair
+2. if currency pair is inverted form<br/>
+   2.1 swap the currency pair<br/>
    2.2 multiply currency value with 1/currency rate
-3. if currency pair not in the given data
-   3.1 sorted based on the intermediate conversion currency
-   3.2 converted initially with the intermediate currency
-   3.3 again with that result, converted to the final currency
+3. if currency pair not in the given data<br/>
+   3.1 sorted based on the intermediate conversion currency<br/>
+   3.2 converted initially with the intermediate currency<br/>
+   3.3 again with that result, converted to the final currency<br/>
 
 # Getting Started with Create React App
 
