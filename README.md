@@ -16,9 +16,9 @@ function accepts currency pair and currency value
    2.1 swap the currency pair<br/>
    2.2 multiply currency value with 1/currency rate
 3. if currency pair not in the given data<br/>
-   3.1 sorted based on the intermediate conversion currency<br/>
-   3.2 converted initially with the intermediate currency<br/>
-   3.3 again with that result, converted to the final currency<br/>
+   3.1 sort base currency based on the intermediate conversion currency<br/>
+   3.2 convert base currency initially with the intermediate currency<br/>
+   3.3 with the above result, convert to the final currency<br/>
 
 # Getting Started with Create React App
 
