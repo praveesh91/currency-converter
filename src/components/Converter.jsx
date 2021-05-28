@@ -9,7 +9,7 @@ import Result from './Result';
 import SelectCurrency from './SelectCurrency';
 
 const Converter = (props) => {
-  const [result, setResult] = useState();
+  const [result, setResult] = useState(0);
   const [errorFlag, setErrorFlag] = useState(false);
   const rates = {
     AUDUSD: 0.8371,
@@ -25,7 +25,6 @@ const Converter = (props) => {
   };
 
   useEffect(() => {
-    console.log(errorFlag);
     errorFlag &&
       message.info(
         `Unable to find the rate for ${props.baseCurrency}/${props.termsCurrency}`
@@ -76,23 +75,19 @@ const Converter = (props) => {
       crossInitialStep(base, "USD", terms, amount);
     }
     if (base === "USD") {
-      console.log("Base USD");
       crossInitialStep(base, "EUR", terms, amount);
     }
     if (base === "NOK") {
-      console.log("Base NOK");
       if (terms === "CZK" || "DKK" || "USD") {
         crossInitialStep(base, "EUR", terms, amount);
       }
     }
     if (base === "DKK") {
-      console.log("Base DKK");
       if (terms === "CZK" || "NOK" || "USD") {
         crossInitialStep(base, "EUR", terms, amount);
       }
     }
     if (base === "CZK") {
-      console.log("Base CZK");
       if (terms === "DKK" || "NOK" || "USD") {
         crossInitialStep(base, "EUR", terms, amount);
       }
@@ -151,7 +146,7 @@ const Converter = (props) => {
           </Button>
         </FormItem>
         <FormItem>
-          <Result finalRes={result.toFixed(2)} />
+          <Result finalRes={result} />
         </FormItem>
       </Form>
     </Card>
