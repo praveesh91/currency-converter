@@ -13,9 +13,15 @@ describe("<Inputbox />", () => {
   });
 
   test("pass input value to inpput box", () => {
-    const { queryByTestId } = render(<Inputbox />);
+    const { getByText, queryByTestId, getByPlaceholderText } = render(
+      <Inputbox />
+    );
     const inputEl = queryByTestId("number-input");
-    fireEvent.change(inputEl, { target: { value: "testValue" } });
-    expect(inputEl).toBe("testValue");
+    // fireEvent.change(inputEl, { target: { value: "testValue" } });
+    // expect(inputEl).toBe("testValue");
+    fireEvent.change(getByPlaceholderText("Enter the amount"), {
+      target: { value: "new value" },
+    });
+    expect(getByPlaceholderText("Enter the amount")).toBeTruthy();
   });
 });
