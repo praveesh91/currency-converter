@@ -10,8 +10,6 @@ import SelectCurrency from './SelectCurrency';
 
 const Converter = (props) => {
   const [result, setResult] = useState();
-  // const [intermediateCrossresult, setIntermediateCrossResult] = useState(0);
-  // const [finalCrossresult, setfinalCrossResult] = useState(0);
   const [errorFlag, setErrorFlag] = useState(false);
   const rates = {
     AUDUSD: 0.8371,
@@ -25,11 +23,6 @@ const Converter = (props) => {
     EURDKK: 7.4405,
     EURNOK: 8.6651,
   };
-
-  // useEffect(() => {
-  //   setResult(finalCrossresult);
-  //   return () => {};
-  // }, [intermediateCrossresult]);
 
   useEffect(() => {
     console.log(errorFlag);
@@ -77,6 +70,7 @@ const Converter = (props) => {
       }
     }
   };
+
   const crossedValues = (base, terms, amount) => {
     if (base === "AUD" || "CAD" || "CNY" || "EUR" || "GBP" || "JPY" || "NSD") {
       crossInitialStep(base, "USD", terms, amount);
@@ -110,7 +104,6 @@ const Converter = (props) => {
         key === `${base}${intermediateTerms}` ||
         key === `${intermediateTerms}${base}`
       ) {
-        // setIntermediateCrossResult(parseInt(amount) * value);
         return crossFinalStep(
           intermediateTerms,
           terms,
@@ -124,8 +117,6 @@ const Converter = (props) => {
   var crossFinalStep = (newBase, terms, intermediateCrossresult) => {
     for (let [key, value] of Object.entries(rates)) {
       if (key === `${newBase}${terms}` || key === `${terms}${newBase}`) {
-        // setfinalCrossResult(intermediateCrossresult * value);
-        // console.log({ finalCrossresult });
         return setResult(intermediateCrossresult * value);
       }
     }
@@ -160,7 +151,7 @@ const Converter = (props) => {
           </Button>
         </FormItem>
         <FormItem>
-          <Result finalRes={result} />
+          <Result finalRes={result.toFixed(2)} />
         </FormItem>
       </Form>
     </Card>
