@@ -6,6 +6,13 @@
 
 [Currency converter App](https://main.d3vm5087pn2ig1.amplifyapp.com/)
 
+# Installation
+
+Clone repo : git clone https://github.com/praveesh91/currency-converter.git<br/>
+Install dependencies : npm install<br/>
+Start application : npm start<br/>
+Run the test suits : npm test<br/>
+
 # Alogirithm
 
 function accepts currency pair and currency value
